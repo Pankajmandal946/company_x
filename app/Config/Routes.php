@@ -32,11 +32,14 @@ $routes->set404Override();
 // $routes->get('/', 'Home::index');
 // $routes->match(['get', 'post'],'/simple', 'sitecontrollers::simple');
 // $routes->match(['get', 'post'],'/about-us', 'sitecontrollers::about');
-// $routes->match(['get', 'post'],'/Dashboard', 'admin::Dashboard');
+// // $routes->match(['get', 'post'],'/Dashboard', 'admin::Dashboard');
+// $routes->match(['get', 'post'],'/index', 'Dashboard::index');
 
-$routes->match(['get', 'post'],'/Login', 'Login::Login', ['filter' => 'noauth']);
-$routes->match(['get', 'post'],'/validation_login', 'Login::validation_login',['filter' => 'noauth']);
-$routes->match(['get', 'post'],'/validation_login', 'Login::validation_login',['filter' => 'noauth']);
+// $routes->match(['get', 'post'],'/Login', 'AdminC::Login', ['filter' => 'noauth']);
+
+$routes->match(['get', 'post'],'/Login', 'AdminC::Login', ['filter' => 'noauth']);
+$routes->match(['get', 'post'],'/VLogin', 'AdminC::VLogin',['filter' => 'noauth']);
+$routes->match(['get', 'post'],'/validation_login', 'AdminC::validation_login',['filter' => 'noauth']);
 
 // $routes->match(['get', 'post'], '/Dashboard', 'Home::Dashboard', ['filter' => 'auth']);
 $routes->match(['get', 'post'], '/', 'Home::Home', ['filter' => 'auth']);

@@ -38,21 +38,20 @@ class admin extends BaseController
         echo view('admin/render/footer', $data);
     }
 
-    // public function Login()
-    // {
-    //     print_r("abc");exit;
-    //     if ($this->request->getPost()) {
-    //         if ($user = $this->userModel->Login($username = $this->request->getPost('username'), $password = $this->request->getPost('password'))) {
-    //             $this->session->set('user', $user);
-    //             $this->session->setFlashData('message', 'Welcome back');
-    //             return redirect()->to('dashboard')->withCookies();
-    //         } else {
-    //             $this->session->setFlashData('message', 'Login Failed');
-    //         }
-    //     }
-    //     $data['message'] = $this->session->getFlashData('message');
-    //     $data['username'] = form_input('username', $username ?? '', 'class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..."');
-    //     $data['password'] = form_input('password', $password ?? '', 'class="form-control form-control-user" id="exampleInputPassword" placeholder="Password"', 'password');
-    //     return view('login', $data);
-    // }
+    public function Login()
+    {
+        if ($this->request->getPost()) {
+            if ($user = $this->userModel->Login($username = $this->request->getPost('username'), $password = $this->request->getPost('password'))) {
+                $this->session->set('user', $user);
+                $this->session->setFlashData('message', 'Welcome back');
+                return redirect()->to('dashboard')->withCookies();
+            } else {
+                $this->session->setFlashData('message', 'Login Failed');
+            }
+        }
+        $data['message'] = $this->session->getFlashData('message');
+        $data['username'] = form_input('username', $username ?? '', 'class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..."');
+        $data['password'] = form_input('password', $password ?? '', 'class="form-control form-control-user" id="exampleInputPassword" placeholder="Password"', 'password');
+        return view('login', $data);
+    }
 }

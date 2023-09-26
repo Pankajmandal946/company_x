@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'shop_H',
+        'database' => 'company_yes',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
