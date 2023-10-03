@@ -1,9 +1,10 @@
 <?php
 // session_start();
-// if (isset($_SESSION['rsp_user_id'])) {
-//   header("location: home.php");
-//   die;
-// }
+// print_r($_SESSION);exit;
+if (isset($_SESSION['dk_user_id'])) {
+    header("Location: http://localhost/pankaj/compny_x/Home" );
+  die;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,117 +129,117 @@
 
     <script>
         $(document).ready(function() {
-            // $(document).on('click', '#modify_password', function(e) {
-            //     e.preventDefault();
-            //     var current_password = $('#current_password').val();
-            //     var new_password = $('#new_password').val();
-            //     var default_username = $('#default_username').val();
-            //     var confirm_new_password = $('#confirm_new_password').val();
-            //     $('.error').text('').hide();
+            $(document).on('click', '#modify_password', function(e) {
+                e.preventDefault();
+                var current_password = $('#current_password').val();
+                var new_password = $('#new_password').val();
+                var default_username = $('#default_username').val();
+                var confirm_new_password = $('#confirm_new_password').val();
+                $('.error').text('').hide();
 
-            //     if (default_username == '') {
-            //         $('.error').text('Please enter Username').show();
-            //         $('#default_username').focus();
-            //         return false;
-            //     }
+                if (default_username == '') {
+                    $('.error').text('Please enter Username').show();
+                    $('#default_username').focus();
+                    return false;
+                }
 
-            //     if (current_password == '' || current_password == "") {
-            //         $('.error').text('Current Password is required').show();
-            //         $('#current_password').focus();
-            //         return false;
-            //     }
+                if (current_password == '' || current_password == "") {
+                    $('.error').text('Current Password is required').show();
+                    $('#current_password').focus();
+                    return false;
+                }
 
-            //     if (new_password == '' || new_password == "") {
-            //         $('.error').text('New Password Password is required').show();
-            //         $('#new_password').focus();
-            //         return false;
-            //     }
+                if (new_password == '' || new_password == "") {
+                    $('.error').text('New Password Password is required').show();
+                    $('#new_password').focus();
+                    return false;
+                }
 
-            //     if (confirm_new_password == '' || confirm_new_password == "") {
-            //         $('.error').text('Confirm New Password Password is required').show();
-            //         $('#confirm_new_password').focus();
-            //         return false;
-            //     }
+                if (confirm_new_password == '' || confirm_new_password == "") {
+                    $('.error').text('Confirm New Password Password is required').show();
+                    $('#confirm_new_password').focus();
+                    return false;
+                }
 
-            //     if (new_password.length < 7) {
-            //         $('.error').text('New Password is must have 8 length').show();
-            //         $('#new_password').focus();
-            //         return false;
-            //     }
+                if (new_password.length < 7) {
+                    $('.error').text('New Password is must have 8 length').show();
+                    $('#new_password').focus();
+                    return false;
+                }
 
-            //     if (confirm_new_password.length < 7) {
-            //         $('.error').text('Confirm New Password Password is must have 8 length').show();
-            //         $('#confirm_new_password').focus();
-            //         return false;
-            //     }
+                if (confirm_new_password.length < 7) {
+                    $('.error').text('Confirm New Password Password is must have 8 length').show();
+                    $('#confirm_new_password').focus();
+                    return false;
+                }
 
-            //     if (!password_fromat(new_password)) {
-            //         $('.error').text('New Password must be contain a upercase,number and spaciel character').show();
-            //         $('#new_password').focus();
-            //         return false;
-            //     }
+                if (!password_fromat(new_password)) {
+                    $('.error').text('New Password must be contain a upercase,number and spaciel character').show();
+                    $('#new_password').focus();
+                    return false;
+                }
 
-            //     if (new_password != confirm_new_password) {
-            //         $('.error').text('New Password must be same as Confirm Password').show();
-            //         $('#new_password').focus();
-            //         return false;
-            //     }
+                if (new_password != confirm_new_password) {
+                    $('.error').text('New Password must be same as Confirm Password').show();
+                    $('#new_password').focus();
+                    return false;
+                }
 
-            //     if (new_password == current_password) {
-            //         $('.error').text('New Password must be diffrent from current password').show();
-            //         $('#new_password').focus();
-            //         return false;
-            //     }
+                if (new_password == current_password) {
+                    $('.error').text('New Password must be diffrent from current password').show();
+                    $('#new_password').focus();
+                    return false;
+                }
 
-            //     let arr = {
-            //         activity: 'change_password',
-            //         current_password: current_password,
-            //         new_password: new_password,
-            //         default_username: default_username,
-            //         confirm_new_password: confirm_new_password
-            //     };
-            //     var request = JSON.stringify(arr);
+                let arr = {
+                    activity: 'change_password',
+                    current_password: current_password,
+                    new_password: new_password,
+                    default_username: default_username,
+                    confirm_new_password: confirm_new_password
+                };
+                var request = JSON.stringify(arr);
 
-            //     $.ajax({
-            //         method: "POST",
-            //         url: "controller/login.php",
-            //         data: request,
-            //         dataType: "JSON",
-            //         async: false,
-            //         headers: {
-            //             "Content-Type": "application/json"
-            //         },
-            //         beforeSend: function() {
-            //             console.log(request);
-            //         },
-            //     }).done(function(Response) {
-            //         $('#current_password').val('');
-            //         $('#new_password').val('');
-            //         $('#confirm_new_password').val('');
-            //         $('#password_change').modal('hide');
-            //         alert('Password Change Successfully Please login');
-            //     }).fail(function(jqXHR, exception) {
-            //         var msg = '';
-            //         if (jqXHR.status === 0) {
-            //             msg = 'Not connect.\n Verify Network.';
-            //         } else if (jqXHR.status == 404) {
-            //             msg = 'Requested page not found. [404]';
-            //         } else if (jqXHR.status == 500) {
-            //             msg = 'Internal Server Error [500].';
-            //         } else if (exception === 'parsererror') {
-            //             msg = 'Requested JSON parse failed.';
-            //         } else if (exception === 'timeout') {
-            //             msg = 'Time out error.';
-            //         } else if (exception === 'abort') {
-            //             msg = 'Ajax request aborted.';
-            //         } else {
-            //             msg = 'Uncaught Error.\n' + jqXHR.responseJSON.msg;
-            //         }
-            //         $("#message").html(msg).show();
-            //     }).always(function(xhr) {
-            //         console.log(xhr);
-            //     });
-            // });
+                $.ajax({
+                    method: "POST",
+                    url: "controller/login.php",
+                    data: request,
+                    dataType: "JSON",
+                    async: false,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    beforeSend: function() {
+                        console.log(request);
+                    },
+                }).done(function(Response) {
+                    $('#current_password').val('');
+                    $('#new_password').val('');
+                    $('#confirm_new_password').val('');
+                    $('#password_change').modal('hide');
+                    alert('Password Change Successfully Please login');
+                }).fail(function(jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseJSON.msg;
+                    }
+                    $("#message").html(msg).show();
+                }).always(function(xhr) {
+                    console.log(xhr);
+                });
+            });
             $("#login").on("click", function(e) {
                 e.preventDefault();
                 var username = $.trim($("#username").val());
@@ -255,7 +256,7 @@
                 }
                 if (username != "" && password != "") {
                     $.ajax({
-                        url: "Controllers/VLogin",
+                        url: "VLogin",
                         type: "POST",
                         dataType: "json",
                         async: false,
@@ -268,7 +269,7 @@
                             'password': password
                         }),
                         success: function(response) {
-                            window.location.href = "home.php";
+                            window.location.href = '<?= base_url() ?>/Home';
                         },
                         error: function(jqXHR, exception) {
                             var msg = '';

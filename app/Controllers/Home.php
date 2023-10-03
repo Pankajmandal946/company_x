@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use SYSTEMPATH\Session;
 
 class Home extends BaseController
 {
@@ -9,16 +10,16 @@ class Home extends BaseController
         return view("include/header")
             . view("include/navbar")
             . view("include/sidebar")
-            . view("backHry/home")
+            . view("home")
             . view("include/footerJs")
             . view("include/footer");
     }
-    public function Dashboard()
+
+    public function Logout() 
     {
-        return view("backHry/home");
+        session_start();
+        session_destroy();
+        header('location: http://localhost/pankaj/compny_x/Login'); die();
     }
-    public function index()
-    {
-        return view('welcome_message');
-    }
+    
 }

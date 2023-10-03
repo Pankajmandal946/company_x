@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use Config\Database;
 
 class AdminM extends Model
 {
@@ -23,80 +22,80 @@ class AdminM extends Model
         $this->created_by = 0;
         $this->updated_by = 0;
         $this->table_name = "user_login";
-        $this->db = new \DBConnection();
-        $this->conn = $this->db->connect();
+        $this->db = \Config\Database::connect();
+        // $this->conn = $this->db->connect();
     }
 
-    function user_insert(){
-        $data = [
-            'user_id'                     => $this->user_id,
-            'username'                    => $this->username,
-            'password'                    => $this->generate_password($this->password),
-            'last_login_time'             => $this->last_login_time,
-            'last_login_ip'               => $this->last_login_ip,
-            'default_password_change'     => $this->default_password_change,
-            'password_change_time'        => $this->password_change_time,
-            'is_active'                   => $this->is_active,
-            'created_by'                  => $this->created_by
-        ];
+    function Loginsert(){
+            $user_id                     = $this->user_id;
+            $username                    = $this->username;
+            $password                    = $this->generate_password($this->password);
+            $last_login_time             = $this->last_login_time;
+            $last_login_ip               = $this->last_login_ip;
+            $default_password_change     = $this->default_password_change;
+            $password_change_time        = $this->password_change_time;
+            $is_active                   = $this->is_active;
+            $created_by                  = $this->created_by;
         
-        $sql = "INSERT INTO ".$this->table_name." (user_id, username, password, last_login_time, last_login_ip, default_password_change, password_change_time, is_active, created_by) VALUES (:user_id, :username, :password, :last_login_time , :last_login_ip, :default_password_change, :password_change_time, :is_active, :created_by)";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->execute($data);
-        $stmt->closeCursor();
+        $Qry = "INSERT INTO ".$this->table_name." (user_id, username, password, last_login_time, last_login_ip, default_password_change, password_change_time, is_active, created_by) VALUES ($user_id, $username, $password, $last_login_time, $last_login_ip, $default_password_change, $password_change_time, $is_active, $created_by)";
+        $pQuery= $this->db->query($Qry);
+        // $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
         return true;
     }
+    
+    function Logupdate() {
+            $user_login_id               = $this->user_login_id;
+            $user_id                     = $this->user_id;
+            $username                    = $this->username;
+            $password                    = $this->generate_password($this->password);
+            $is_active                   = $this->is_active;
+            $updated_by                  = $this->updated_by;
 
-    function user_update() {
-        $data = [
-            'user_login_id'               => $this->user_login_id,
-            'user_id'                     => $this->user_id,
-            'username'                    => $this->username,
-            'password'                    => $this->generate_password($this->password),
-            'is_active'                   => $this->is_active,
-            'updated_by'                  => $this->updated_by
-        ];
-        $sql = "UPDATE ".$this->table_name." SET user_id=:user_id, username=:username, password=:password,  is_active=:is_active, updated_by=:updated_by WHERE user_id=:user_id";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->execute($data);
-        $stmt->closeCursor();
+        $Qry = "UPDATE ".$this->table_name." SET user_id=:user_id, username='$username', password='$password',  is_active='$is_active', updated_by='$updated_by' WHERE user_id='$user_id'";
+        $pQuery= $this->db->query($Qry);
+        // $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
         return true;
     }
+    
+    function Logdelete() {
 
-    function user_delete() {
-        $data = [
-            'user_login_id'    => $this->user_login_id,
-            'is_active'         => 2,
-            'updated_by'        => $this->updated_by
-        ];
-        $sql = "UPDATE ".$this->table_name." SET is_active=:is_active, updated_by=:updated_by WHERE user_login_id=:user_login_id";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->execute($data);
-        $stmt->closeCursor();
-        $last_query = $stmt->queryString;
+            $user_login_id    = $this->user_login_id;
+            $is_active         = 2;
+            $updated_by        = $this->updated_by;
+
+        $Qry = "UPDATE ".$this->table_name." SET is_active='$is_active', updated_by='$updated_by' WHERE user_login_id='$user_login_id'";
+        $pQuery= $this->db->query($Qry);
+        // $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
+        $last_query = $pQuery->getQuery();;
         return $last_query;
     }
-
+    
     function remove() {
-        $data = [
-            'user_id'    => $this->user_id,
-            'is_active'  => 2,
-            'updated_by' => $this->updated_by
-        ];
-        $sql = "UPDATE ".$this->table_name." SET is_active=:is_active, updated_by=:updated_by WHERE user_id=:user_id";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->execute($data);
-        $stmt->closeCursor();
+
+            $user_id    = $this->user_id;
+            $is_active  = 2;
+            $updated_by = $this->updated_by;
+
+        $Qry = "UPDATE ".$this->table_name." SET is_active='$is_active', updated_by='$updated_by' WHERE user_id='$user_id'";
+        $pQuery= $this->db->query($Qry);
+        // $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
         return true;
     }
 
     function get($Request) {
         $output = [];
-        $data = [
-            'is_active' => 2
-        ];
+        $is_active = 2;
+
         if(!empty($Request)){
-            $query = "SELECT user_id,username,password,last_login_time ,last_login_ip,default_password_change,user_id_id FROM ".$this->table_name." WHERE is_active < :is_active";  
+            $query = "SELECT user_id,username,password,last_login_time ,last_login_ip,default_password_change,user_id_id FROM ".$this->table_name." WHERE is_active < '$is_active'";  
             if (isset($Request->search->value)) {
                 $data['search_value'] = '%'.$Request->search->value.'%';
                 $query .= " AND (user_id LIKE :search_value";
@@ -115,16 +114,13 @@ class AdminM extends Model
                 $query .= ' LIMIT ' . $Request->start. ', ' . $Request->length;
             }
         }else{
-            $query = "SELECT * FROM ".$this->table_name." WHERE is_active < :is_active";    
+            $query = "SELECT * FROM ".$this->table_name." WHERE is_active < '$is_active'";    
         }
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute($data);
-        $results = $stmt->fetchAll();
-        $count = $stmt->rowCount();
-        // $last_query = $stmt->queryString;
-        // $debug_query = $stmt->_debugQuery(); 
-        $stmt->closeCursor();
-        if($count>0) {
+        $pQuery = $this->db->query($query);
+        $results = $pQuery->getResultArray();
+        // print_r($row);exit;
+        $this->db->close();
+        if(isset($row) && count($row)>0) {
             foreach($results as $row) {
                 $output[] = [
                     'user_login_id'             => $row['user_login_id'],
@@ -141,16 +137,14 @@ class AdminM extends Model
     }
 
     function check() {
-        $data = [
-            'user_id'   => $this->user_id,
-            'is_active'     => 1
-        ];
-        $stmt = $this->conn->prepare("SELECT user_login_id FROM ".$this->table_name." WHERE user_id = :user_id AND is_active=:is_active");
-        $stmt->execute($data);
-        $count = $stmt->rowCount();
-        $row = $stmt->fetch();
-        $stmt->closeCursor();
-        if($count>0) {
+
+            $user_id   = $this->user_id;
+            $is_active = 1;
+
+        $pQuery = $$this->db->query("SELECT user_login_id FROM ".$this->table_name." WHERE user_id = '$user_id' AND is_active= '$is_active'");
+        $row = $pQuery->getRowArray();
+        $this->db->close();
+        if(isset($row) && count($row)>0) {
             $this->user_login_id = $row['user_login_id'];
             return true;
         } else 
@@ -158,16 +152,15 @@ class AdminM extends Model
     }
 
     function check_username() {
-        $data = [
-            'username'   => $this->username,
-            'is_active'     => 1
-        ];
-        $stmt = $this->conn->prepare("SELECT user_login_id FROM ".$this->table_name." WHERE username = :username AND is_active=:is_active");
-        $stmt->execute($data);
-        $count = $stmt->rowCount();
-        $row = $stmt->fetch();
-        $stmt->closeCursor();
-        if($count>0) {
+        
+        $username  = $this->username;
+        $is_active = 1;
+
+        $pQuery = $this->db->query("SELECT user_login_id FROM ".$this->table_name." WHERE username = '$username' AND is_active='$is_active'");
+        $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
+        if(isset($row) && count($row)>0) {
             $this->user_login_id = $row['user_login_id'];
             return true;
         } else 
@@ -184,28 +177,26 @@ class AdminM extends Model
     }
 
     function validate_login() {
-        $data = [
-            'username'  => $this->username,
-            'is_active' => 1
-        ];
-        $stmt = $this->conn->prepare("SELECT user_login_id, ".$this->table_name.".user_id, name, email_id, mobile_no, username,user_type.user_type, password, default_password_change FROM ".$this->table_name." INNER JOIN user ON (".$this->table_name.".user_id=user.user_id) INNER JOIN user_type ON (user.user_type_id=user_type.user_type_id) WHERE username = :username AND ".$this->table_name.".is_active=:is_active");
-        $stmt->execute($data);
-        $count = $stmt->rowCount();
-        $row = $stmt->fetch();
-        // $debug_query = $stmt->_debugQuery();
-        $stmt->closeCursor();
-        if($count>0) {  
-            if($this->validate_password($this->password, $row['password'])) {
-                if($row['default_password_change']==1) {
-                    $data = [
-                        'user_login_id'               => $row['user_login_id'],
-                        'last_login_time'             => date('Y-m-d H:i:s')
-                    ];
-                    $sql = "UPDATE ".$this->table_name." SET last_login_time =:last_login_time WHERE user_login_id=:user_login_id";
-                    $stmt= $this->conn->prepare($sql);
-                    $stmt->execute($data);
-                    $stmt->closeCursor();
 
+        $username  = $this->username;
+        $is_active = 1;
+        
+        $pQuery = $this->db->query("SELECT user_login_id, ".$this->table_name.".user_id, name, email_id, mobile_no, username,user_type.user_type, password, default_password_change FROM ".$this->table_name." INNER JOIN user ON (".$this->table_name.".user_id=user.user_id) INNER JOIN user_type ON (user.user_type_id=user_type.user_type_id) WHERE username = '$username' AND ".$this->table_name.".is_active='$is_active'");
+        $row = $pQuery->getRowArray();
+        // print_r($row);exit;
+        $this->db->close();
+        if(isset($row) && count($row)>0) {
+            if($this->validate($this->password, $row['password'])) {
+                if($row['default_password_change']==1) {
+        
+                    date_default_timezone_set("Asia/Calcutta");
+                    $user_login_id = $row['user_login_id'];
+                    $last_login_time = date('Y-m-d H:i:s');
+
+                    $sql = "UPDATE ".$this->table_name." SET last_login_time ='$last_login_time' WHERE user_login_id='$user_login_id'";
+                    $pQuery= $this->db->query($sql);
+                    $this->db->close();
+                    
                     session_start();
                     $_SESSION["dk_session_status"]     = true;
                     $_SESSION["dk_user_id"]            = $row['user_id'];
@@ -215,26 +206,25 @@ class AdminM extends Model
                     $_SESSION["dk_mobile_no"]          = $row['mobile_no'];
                     $_SESSION["dk_user_type"]          = $row['user_type'];
                     $_SESSION["dk_username"]           = $row['username'];
-
+                    // print_r($_SESSION);exit;
                     return true;
                 } else {
                     throw new \Exception('Please change your default password', 402);
                 }
             } else {
-                throw new \Exception("Invalid Password",401);
+                throw new Exception("Invalid Password",401);
             }
         } else {
-            throw new \Exception('User does not exists',401);
+            throw new Exception('User does not exists', 401);
         }
     }
 
     function validate_user() {
-        $data = [
-            'username'  => $this->username,
-            'is_active' => 1
-        ];
-        $stmt = $this->conn->prepare("SELECT user_login_id, ".$this->table_name.".user_id, name, email_id, mobile_no, username,user_type.user_type, password, default_password_change FROM ".$this->table_name." INNER JOIN user ON (".$this->table_name.".user_id=user.user_id) INNER JOIN user_type ON (user.user_type_id=user_type.user_type_id) WHERE username = :username AND ".$this->table_name.".is_active=:is_active");
-        $stmt->execute($data);
+
+            $username  = $this->username;
+            $is_active = 1;
+
+        $stmt = $this->conn->prepare("SELECT user_login_id, ".$this->table_name.".user_id, name, email_id, mobile_no, username,user_type.user_type, password, default_password_change FROM ".$this->table_name." INNER JOIN user ON (".$this->table_name.".user_id=user.user_id) INNER JOIN user_type ON (user.user_type_id=user_type.user_type_id) WHERE username = '$username' AND ".$this->table_name.".is_active='$is_active'");
         $count = $stmt->rowCount();
         $row = $stmt->fetch();
         $stmt->closeCursor();
@@ -242,10 +232,10 @@ class AdminM extends Model
             if($this->validate_password($this->password, $row['password'])) {
                 return $row['user_id'];
             } else {
-                throw new \Exception("Invalid Password");
+                throw new Exception("Invalid Password");
             }
         } else {
-            throw new \Exception("User does not exist");
+            throw new Exception("User does not exist");
         }
     }
 
@@ -263,32 +253,43 @@ class AdminM extends Model
         return true;
     }
 
-    function change_password() {
-        $data = [
-            'user_id'                    => $this->user_id,
-            'password'                   => $this->generate_password($this->new_password),
-            'is_active'                  => $this->is_active,
-            'updated_by'                 => $this->user_id
-        ];
-        $sql = "UPDATE ".$this->table_name." SET password=:password,  is_active=:is_active, default_password_change='1',updated_by=:updated_by WHERE user_id=:user_id";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->execute($data);
-        // $last_query = $stmt->queryString;
-        // $debug_query = $stmt->_debugQuery();
-        // echo $debug_query;exit;
-        $stmt->closeCursor();
-        return true;
-    }
-
-    function validate_password($password='', $db_password='') {
-        if(password_verify($password, $db_password)) {
-            return true;
-        }
-        return false;
-    }
-
-    function generate_password() {
-        return password_hash($this->password, PASSWORD_BCRYPT, ["cost"=>12]);
-    }
-
 }
+
+/*
+if(isset($row) && count($row)>0) {
+    if($this->validate($this->password, $row['password'])) {
+        if($row['default_password_change']==1) {
+
+            date_default_timezone_set("Asia/Calcutta");
+            $user_login_id = $row['user_login_id'];
+            $last_login_time = date('Y-m-d H:i:s');
+            // $data = [
+            //     'user_login_id'               => $row['user_login_id'],
+            //     'last_login_time'             => date('Y-m-d H:i:s')
+            // ];
+            $sql = "UPDATE ".$this->table_name." SET last_login_time ='$last_login_time' WHERE user_login_id='$user_login_id'";
+            $pQuery= $this->db->query($sql);
+            // $this->db->close();
+            
+            session_start();
+            $_SESSION["dk_session_status"]     = true;
+            $_SESSION["dk_user_id"]            = $row['user_id'];
+            $_SESSION["dk_user_login_id"]      = $row['user_login_id'];
+            $_SESSION["dk_name"]               = $row['name'];
+            $_SESSION["dk_email_id"]           = $row['email_id'];
+            $_SESSION["dk_mobile_no"]          = $row['mobile_no'];
+            $_SESSION["dk_user_type"]          = $row['user_type'];
+            $_SESSION["dk_username"]           = $row['username'];
+
+            return true;
+        } else {
+            print_r("abc");exit;
+            throw new \Exception('Please change your default password', 402);
+        }
+    } else {
+        throw new \Exception("Invalid Password",401);
+    }
+} else {
+    throw new Exception('User does not exists', 401);
+}
+*/ 
