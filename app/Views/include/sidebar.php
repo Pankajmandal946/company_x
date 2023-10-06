@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link" style="text-align: center;">
+    <a href="<?= base_url() ?>/Home" class="brand-link" style="text-align: center;">
         <span class="brand-text font-weight-bold">Backend Panal</span>
     </a>
 
@@ -26,10 +26,27 @@
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="<?= base_url() ?>/Home" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item menu-open">
+                    <a href="<?= base_url() ?>/User" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu-open">
+                    <a href="<?= base_url() ?>/UserType" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            UserType
                         </p>
                     </a>
                 </li>

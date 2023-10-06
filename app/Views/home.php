@@ -1,4 +1,6 @@
-
+<?= $this->include('include/header') ?>
+<?= $this->include('include/navbar') ?>
+<?= $this->include('include/sidebar') ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -88,50 +90,6 @@
       </div> -->
   </section>
 </div>
-<!-- 
-  else if (isset($request->activity) && $request->activity == 'modify_password') {
-            @session_start();
-            $user_login->username = $_SESSION['dk_username'];
-            $user_login->password = $request->current_password;
-            if ($user_login->validate_user()>0) {
-                $user_login->user_id = $_SESSION['dk_user_id'];
-                $user_login->password = $request->new_password;
-                if ($user_login->modify_password()) {
-                    $response = [
-                        'success' => 1,
-                        'code' => 200,
-                        'msg' => 'Password Modifyed successfully'
-                    ];
 
-                    http_response_code(200);
-                    echo json_encode($response);
-                } else {
-                    throw new \Exception('Fail To Modify Password', 400);
-                }
-            } else {
-                throw new \Exception('Invaild Username or Password', 400);
-            }
-        } else if (isset($request->activity) && $request->activity == 'change_password') {
-            $user_login->username = $request->default_username;
-            $user_login->password = $request->current_password;
-            $user_id = $user_login->validate_user();
-            if ($user_id>0) {
-                $user_login->user_id = $user_id;
-                $user_login->password = $request->new_password;
-                if ($user_login->change_password()) {
-                    $response = [
-                        'success' => 1,
-                        'code' => 200,
-                        'msg' => 'Defualt Password changed successfully'
-                    ];
-
-                    http_response_code(200);
-                    echo json_encode($response);
-                } else {
-                    throw new \Exception('Fail To Modify Password', 400);
-                }
-            } else {
-                throw new \Exception('Invaild Username or Password', 400);
-            }
-        }
- -->
+<?= $this->include("include/footerJs"); ?>
+<?= $this->include("include/footer"); ?>

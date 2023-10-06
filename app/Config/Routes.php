@@ -48,15 +48,18 @@ $routes->match(['get', 'post'], '/Home', 'Home::Home', ['filter' => 'noauth']);
 $routes->match(['get', 'post'],'/', 'ValidateLogin::Login');
 $routes->match(['get', 'post'],'/Login', 'ValidateLogin::Login');
 $routes->match(['get', 'post'],'/VLogin', 'ValidateLogin::VLogin');
+$routes->match(['get', 'post'],'/Logout', 'AdminC::Logout');
 
-$routes->match(['get', 'post'],'/validation_login', 'AdminC::validation_login');
-$routes->match(['get', 'post'], '/Home', 'Home::Home');
-$routes->match(['get', 'post'], '/Logout', 'Home::Logout');
+$routes->match(['get', 'post'],'/Home', 'Home::Home');
+$routes->match(['get', 'post'],'/User', 'Home::User');
+$routes->match(['get', 'post'],'/UserType', 'Home::UserType');
+// $routes->match(['get', 'post'],'/Home', 'Home::Home');
+// $routes->match(['get', 'post'],'/Home', 'Home::Home');
 
 // $routes->match(['get', 'post'], '/Dashboard', 'Home::Dashboard', ['filter' => 'auth']);
 // $routes->match(['get', 'post'], '/', 'Home::Home', ['filter' => 'auth']);
 // $routes->get('/Error', 'AdminC::Error');
-$routes->match(['get', 'post'], '/Error', 'AdminC::Error');
+$routes->match(['get', 'post'],'/Error', 'AdminC::Error');
 
 
 /*

@@ -14,4 +14,11 @@ class AdminC extends BaseController
     {
         return view("errors/html/error404");
     }
+
+    public function Logout() 
+    {
+        session_start();
+        session_destroy();
+        header('location: http://localhost/pankaj/compny_x/Login'); die();
+    }
 }
